@@ -1,7 +1,7 @@
 // @flow
 import type { ActionType } from '../utils/actionType';
 
-import { SET_SCORE } from '../actions/main';
+import { SET_SCORE } from '../actions/mainScreen';
 
 export type scoreStateType = {
   score: number

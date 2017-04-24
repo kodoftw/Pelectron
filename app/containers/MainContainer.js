@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import Main from '../components/Main';
-import * as MainActions from '../actions/main';
+import MainScreen from '../components/MainScreen';
+import * as MainScreenActions from '../actions/mainScreen';
 
 function mapStateToProps(state) {
   return {
@@ -13,7 +13,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(MainActions, dispatch);
+  return bindActionCreators(MainScreenActions, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);
