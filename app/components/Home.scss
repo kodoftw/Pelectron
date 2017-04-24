@@ -1,8 +1,11 @@
+@import '../variables.scss';
+
 .container {
   position: absolute;
   top: 30%;
   left: 10px;
   text-align: center;
+  color: $primary-color;
 }
 
 .container h2 {
