@@ -1,0 +1,21 @@
+@import '../_variables.scss';
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.gameContainer {
+  width: 40vw;
+  height: 80vh;
+  background-color: $black;
+}
+
+.btn {
+  width: 10vw;
+  height: 10vh;
+  background-color: lightgreen;
+}
