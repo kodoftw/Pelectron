@@ -5,6 +5,7 @@ import styles from './MainScreen.scss';
 
 // Containers
 import Score from './Score';
+import Pad from './Pad';
 
 export default class MainScreen extends Component {
   render() {
@@ -13,6 +14,7 @@ export default class MainScreen extends Component {
       <div className={styles.container} data-tid="container">
         <div className={styles.gameContainer} data-tid="gameContainer">
           <Score score={score} />
+          <Pad />
         </div>
       </div>
     );
