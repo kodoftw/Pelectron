@@ -4,17 +4,19 @@ import { Link } from 'react-router-dom';
 import styles from './MainScreen.scss';
 
 // Containers
+import PadContainer from '../containers/PadContainer';
+
+// Components
 import Score from './Score';
-import Pad from './Pad';
 
 export default class MainScreen extends Component {
   render() {
-    const { setScore, score } = this.props;
+    const { SetScore, score } = this.props;
     return (
       <div className={styles.container} data-tid="container">
         <div className={styles.gameContainer} data-tid="gameContainer">
           <Score score={score} />
-          <Pad />
+          <PadContainer />
         </div>
       </div>
     );
