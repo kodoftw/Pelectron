@@ -1,8 +1,8 @@
 export const SET_SCORE = 'SET_SCORE';
 
-export function SetScore() {
+export function SetScore(parameter) {
   return {
-    value: 123456,
-    type: SET_SCORE
+    type: SET_SCORE,
+    parameter
   };
 }

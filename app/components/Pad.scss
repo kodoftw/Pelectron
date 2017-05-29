@@ -3,8 +3,19 @@
 .pad {
     position: absolute;
     top: 95%;
-    width: 30%;
+    width: 31%;
     height: 1%;
-    margin-left: 3%;
     background-color: $lightgray;
+
+    &.left {
+        left: 3.5%;
+    }
+
+    &.center {
+        left: 34.5%;
+    }
+
+    &.right {
+        left: 65.5%;
+    }
 }

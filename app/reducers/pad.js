@@ -1,16 +1,28 @@
 // @flow
 import type { ActionType } from '../utils/actionType';
 
-import { MOVE_LEFT, MOVE_RIGHT } from '../actions/pad';
+import { LEFT, RIGHT } from '../actions/inputHandler';
 
-export type padStateType = {
-  padPosition: number
+type PadStateType = {
+  position: number
 };
 
-export default function pad(state: number = 1, action: ActionType) {
-    console.log(`pad reducer: ${state} - ${action.type}`);
+const initialState: PadStateType = {
+    position: 1
+}
+
+export default function pad(state: PadStateType = initialState, action: ActionType) {
+    let newState = Object.assign({}, state);
     switch (action.type)
     {
+        case LEFT:
+            newState.position = state.position > 0 ? state.position - 1 : 0;
+            return newState;
+
+        case RIGHT:
+            newState.position = state.position < 2 ? state.position + 1 : 2;
+            return newState;
+
         default:
             return state;
     }

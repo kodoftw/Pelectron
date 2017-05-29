@@ -1,25 +1,34 @@
-import * as PadActions from '../actions/pad';
 import keyboardjs from 'keyboardjs';
+import { bindActionCreators } from 'redux';
+import * as InputHandlerActions from '../actions/inputHandler';
 
 class __InputHandler {
     constructor() {
-        const { MoveLeft, MoveRight } = PadActions;
+    }
 
-        keyboardjs.bind('left', (e) => this.onKeyEvent(e, MoveLeft));
-        keyboardjs.bind('right', (e) => this.onKeyEvent(e, MoveRight));
+    loadActions(dispatch) {
+        const { Left, Right } = this.getActions(dispatch);
+
+        // @TODO: unbind all actions
+
+        keyboardjs.bind('left', (e) => this.onKeyEvent(e, Left));
+        keyboardjs.bind('right', (e) => this.onKeyEvent(e, Right));
     }
 
     onKeyEvent(event, callback) {
         event.preventDefault();
         event.stopPropagation();
         this.throttleKeyboard();
-        console.log(`${event.key} pressed`);
         callback();
     }
 
     throttleKeyboard() {
         keyboardjs.pause();
         setTimeout(() => keyboardjs.resume(), 20);
+    }
+
+    getActions(dispatch) {
+        return bindActionCreators(InputHandlerActions, dispatch);
     }
 }
 

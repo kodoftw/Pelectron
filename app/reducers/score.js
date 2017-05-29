@@ -3,15 +3,21 @@ import type { ActionType } from '../utils/actionType';
 
 import { SET_SCORE } from '../actions/mainScreen';
 
-export type scoreStateType = {
+type ScoreStateType = {
   score: number
 };
 
-export default function score(state: number = 0, action: ActionType) {
+const initialState: ScoreStateType = {
+    score: 0
+}
+
+export default function score(state: ScoreStateType = initialState, action: ActionType) {
+    let newState = Object.assign({}, state);
     switch (action.type)
     {
         case SET_SCORE:
-            return action.value;
+            newState.score = action.value;
+            return newState;
 
         default:
             return state;
