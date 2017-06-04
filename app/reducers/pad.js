@@ -1,5 +1,5 @@
 // @flow
-import type { ActionType } from '../utils/actionType';
+import { ActionType } from '../models';
 
 import { LEFT, RIGHT } from '../actions/inputHandler';
 

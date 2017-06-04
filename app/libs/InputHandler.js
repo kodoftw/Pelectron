@@ -10,7 +10,6 @@ class __InputHandler {
         const { Left, Right } = this.getActions(dispatch);
 
         // @TODO: unbind all actions
-
         keyboardjs.bind('left', (e) => this.onKeyEvent(e, Left));
         keyboardjs.bind('right', (e) => this.onKeyEvent(e, Right));
     }

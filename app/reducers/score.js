@@ -1,7 +1,7 @@
 // @flow
-import type { ActionType } from '../utils/actionType';
+import { ActionType } from '../models';
 
-import { SET_SCORE } from '../actions/mainScreen';
+import { SET_SCORE } from '../actions/gameScreen';
 
 type ScoreStateType = {
   score: number
