@@ -12,7 +12,7 @@ import Score from './Score';
 
 export default class GameScreen extends Component {
   render() {
-    const { SetScore, score } = this.props;
+    const { score } = this.props;
     return (
       <div className={styles.container} data-tid="container">
         <div className={styles.gameContainer} data-tid="gameContainer">

@@ -1,28 +1,32 @@
 // @flow
 import { ActionType, Bullet } from '../models';
 
-import { SPAWN_BULLET } from '../actions/gameState';
+import { SPAWN_BULLET, GAME_TICK } from '../actions/gameState';
 
-// Services
-import { SpawnerFactory } from '../services/SpawnerFactory';
+import { BulletSpawnerFactory } from '../services/BulletSpawnerFactory';
 
 type BulletsStateType = {
-  bullets: Bullet[],
-  counter: number
+  bullets: BulletSpawn[],
+  state: number
 };
 
 const initialState: BulletsStateType = {
     bullets: [],
-    counter: 0
+    state: 0
 }
 
-export default function score(state: BulletsStateType = initialState, action: ActionType) {
+export default function bullet(state: BulletsStateType = initialState, action: ActionType) {
     let newState = Object.assign({}, state);
     switch (action.type)
     {
         case SPAWN_BULLET:
-            newState.bullets.push(SpawnerFactory.Bullet(action.parameter));
-            newState.counter = newState.bullets[newState.bullets.length - 1].id;
+            newState.bullets.push(BulletSpawnerFactory.SpawnBullet(action.parameter));
+            newState.state++;
+            return newState;
+
+        case GAME_TICK:
+            newState.bullets.forEach((_) => _.move(action.parameter * newState.bullets.indexOf(_)));
+            newState.state++;
             return newState;
 
         default:

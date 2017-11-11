@@ -8,22 +8,18 @@ import Bullet from '../components/Bullet';
 import { InputHandler } from '../services/InputHandler';
 
 function mapStateToProps(state) {
-  if (state.bullet.counter > 3) {
-    return { bullets: state.bullet.bullets };
-  }
-
   return {
     bullets: state.bullet.bullets,
-    counter: state.bullet.counter
+    state: state.bullet.state
   };
 }
 
 class BulletContainer extends Component {
   render() {
-    let { counter, bullets } = this.props;
+    let { state, bullets } = this.props;
     return(
       <div>
-        { bullets.map((bullet) => <Bullet key={bullet.id} bullet={bullet} />) }
+        { bullets.map((bullet) => <Bullet key={bullet.state.id} bullet={bullet} />) }
       </div>
     );
   }
