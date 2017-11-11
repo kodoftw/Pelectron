@@ -1,10 +1,10 @@
-@import 'app/public/style/variables.scss';
+@import 'app/public/style/colors.scss';
 
 .pad {
     position: absolute;
     top: 95%;
     width: 31%;
-    height: 1%;
+    height: 1rem;
     background-color: $lightgray;
 
     &.left {

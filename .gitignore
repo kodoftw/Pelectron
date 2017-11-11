@@ -55,3 +55,6 @@ __snapshots__
 # CSS
 app/*.css
 app/**/*.css
+
+# Yarn
+yarn.lock

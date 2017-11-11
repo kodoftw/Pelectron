@@ -43,7 +43,7 @@ gulp.task('sasslint', function () {
                 formatter: 'visualstudio'
             },
             files: {
-                ignore: ['app/public/style/variables.scss']
+                ignore: ['app/public/style/colors.scss']
             },
             config: '.sass-lint.yml'
         }))

@@ -3,7 +3,8 @@ import * as GameStateActions from '../actions/gameState';
 
 class __GameStateController {
     constructor() {
-        this.bulletColors = ['FF0000', 'FFFF00', '00FF00', '00FFFF', '0000FF', 'FF00FF'];
+        this.bulletCounter = 0;
+        this.bulletColors = this.getBulletColors();
         this.nextColor = 0;
     }
 
@@ -16,7 +17,8 @@ class __GameStateController {
     spawnBullet(SpawnBullet) {
         if (typeof SpawnBullet === 'function') {
             let actionParameter = {
-                color: this.bulletColors[this.nextColor]
+                color: this.bulletColors[this.nextColor],
+                id: this.bulletCounter++
             }
             SpawnBullet(actionParameter);
             this.nextColor = (this.nextColor + 1) % (this.bulletColors.length);
@@ -25,6 +27,21 @@ class __GameStateController {
 
     getActions(dispatch) {
         return bindActionCreators(GameStateActions, dispatch);
+    }
+
+    getBulletColors() {
+        return [
+            '#1E88E5', // blue
+            '#F44336', // red
+            '#43A047', // green
+            '#3949AB', // indigo
+            '#FB8C00', // orange
+            '#5E35B1', // deeppurple
+            '#6D4C41', // brown
+            '#FDD835', // yellow
+            '#880E4F', // deeppink
+            '#039BE5'  // lightblue
+        ];
     }
 }
 

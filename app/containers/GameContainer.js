@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import GameScreen from '../components/GameScreen';
 import * as GameScreenActions from '../actions/gameScreen';
 
-// Libs
-import { InputHandler } from '../libs/InputHandler';
-import { GameStateController } from '../libs/GameStateController';
+// Services
+import { InputHandler } from '../services/InputHandler';
+import { GameStateController } from '../services/GameStateController';
 
 function mapStateToProps(state) {
   return {

@@ -7,5 +7,6 @@ export type Bullet = {
     velocity: {
         x: number,
         y: number
-    }
+    },
+    id: number
 }

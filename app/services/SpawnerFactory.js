@@ -4,11 +4,9 @@ export const SpawnerFactory = {
     Bullet(config): Bullet {
         let bullet = Object.create(this.BulletFactory);
 
-        for (var prop in config) {
-            if (config.hasOwnProperty(prop)) {
-                bullet[prop] = config[prop];
-            }
-        }
+        Object.keys(config).forEach((_) => {
+            bullet[_] = config[_];
+        });
 
         return bullet;
     },

@@ -3,22 +3,26 @@ import { ActionType, Bullet } from '../models';
 
 import { SPAWN_BULLET } from '../actions/gameState';
 
-import { SpawnerFactory } from '../libs/SpawnerFactory';
+// Services
+import { SpawnerFactory } from '../services/SpawnerFactory';
 
-type GameStateType = {
-  bullets: Bullet[]
+type BulletsStateType = {
+  bullets: Bullet[],
+  counter: number
 };
 
-const initialState: GameStateType = {
-    bullets: []
+const initialState: BulletsStateType = {
+    bullets: [],
+    counter: 0
 }
 
-export default function score(state: GameStateType = initialState, action: ActionType) {
+export default function score(state: BulletsStateType = initialState, action: ActionType) {
     let newState = Object.assign({}, state);
     switch (action.type)
     {
         case SPAWN_BULLET:
-            newState.bullets.push = SpawnerFactory.Bullet(action.parameter);
+            newState.bullets.push(SpawnerFactory.Bullet(action.parameter));
+            newState.counter = newState.bullets[newState.bullets.length - 1].id;
             return newState;
 
         default:
