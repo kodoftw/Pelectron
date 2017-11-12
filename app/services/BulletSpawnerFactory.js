@@ -1,8 +1,10 @@
 import { Bullet } from '../entities/index.js';
 
+import { BulletData } from '../models/index.js';
+
 export const BulletSpawnerFactory = {
     SpawnBullet(config): Bullet {
-        let bullet = Object.create(this.BulletFactory);
+        let bullet = Object.create(BulletData, this.BulletFactory());
 
         Object.keys(config).forEach((_) => {
             bullet[_] = config[_];
@@ -10,14 +12,20 @@ export const BulletSpawnerFactory = {
 
         return new Bullet(bullet);
     },
-    BulletFactory: {
-        position: {
-            x: 0,
-            y: 0
-        },
-        velocity: {
-            x: 0,
-            y: 0
-        }
+    BulletFactory: () => {
+        return {
+            position: {
+                value: {
+                    x: 0,
+                    y: 0
+                }
+            },
+            velocity: {
+                value: {
+                    x: 0,
+                    y: 0
+                }
+            }
+        };
     }
 }
