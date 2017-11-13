@@ -21,12 +21,12 @@ export class Bullet {
         this.bulletData.position.y += this.bulletData.velocity.y + this.yAcc / 2;
         this.bulletData.position.x += this.bulletData.velocity.x;
 
+        this.bulletData.velocity.y += this.yAcc;
+
         // @TODO: Check for collisions
         if (this.bulletData.position.y >= this.PadTop) {
             this.bulletData.velocity.y *= -1;
             this.UpdateBulletHorizontalVelocity();
-        } else {
-            this.bulletData.velocity.y += this.yAcc;
         }
     }
 
