@@ -1,3 +1,5 @@
+import { GameConfiguration } from "../models/index";
+
 class __BulletService {
     constructor() {
         this.bulletCounter = 0;
@@ -5,15 +7,16 @@ class __BulletService {
         this.nextColor = 0;
     }
 
-    spawnBullet(SpawnBullet) {
-        if (typeof SpawnBullet === 'function') {
-            let actionParameter = {
+    spawnBullet(SpawnBullet: Function, gameConfiguration: GameConfiguration) {
+        let actionParameter = {
+            config: {
                 color: this.bulletColors[this.nextColor],
                 id: this.bulletCounter++
-            }
-            SpawnBullet(actionParameter);
-            this.nextColor = (this.nextColor + 1) % (this.bulletColors.length);
+            },
+            gameConfiguration: gameConfiguration
         }
+        SpawnBullet(actionParameter);
+        this.nextColor = (this.nextColor + 1) % (this.bulletColors.length);
     }
 
     getBulletColors() {

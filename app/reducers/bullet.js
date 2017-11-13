@@ -20,13 +20,18 @@ export default function bullet(state: BulletsStateType = initialState, action: A
     switch (action.type)
     {
         case SPAWN_BULLET:
-            newState.bullets.push(BulletSpawnerFactory.SpawnBullet(action.parameter));
+            const newBullet = BulletSpawnerFactory.SpawnBullet(
+                action.parameter.config,
+                action.parameter.gameConfiguration);
+            newState.bullets.push(newBullet);
             newState.state++;
+
             return newState;
 
         case GAME_TICK:
-            newState.bullets.forEach((_) => _.move(action.parameter * newState.bullets.indexOf(_)));
+            newState.bullets.forEach((_) => _.move());
             newState.state++;
+
             return newState;
 
         default:

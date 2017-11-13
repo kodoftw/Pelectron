@@ -1,16 +1,16 @@
 import { Bullet } from '../entities/index.js';
 
-import { BulletData } from '../models/index.js';
+import { BulletData, GameConfiguration } from '../models/index.js';
 
 export const BulletSpawnerFactory = {
-    SpawnBullet(config): Bullet {
+    SpawnBullet(config, gameConfiguration: GameConfiguration): Bullet {
         let bullet = Object.create(BulletData, this.BulletFactory());
 
         Object.keys(config).forEach((_) => {
             bullet[_] = config[_];
         });
 
-        return new Bullet(bullet);
+        return new Bullet(bullet, gameConfiguration);
     },
     BulletFactory: () => {
         return {

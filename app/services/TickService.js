@@ -32,7 +32,7 @@ class __TickService {
     tick() {
         if (this.isRunning) {
             if (this.nextBulletSpawn <= 0) {
-                BulletService.spawnBullet(this.actions.SpawnBullet);
+                BulletService.spawnBullet(this.actions.SpawnBullet, this.gameConfiguration);
                 this.nextBulletSpawn = this.gameConfiguration.BulletSpawnRate;
             } else {
                 this.nextBulletSpawn -= this.gameConfiguration.Tick;
@@ -43,7 +43,7 @@ class __TickService {
     }
 
     dispatchGameTick() {
-        this.actions.GameTick(this.gameConfiguration.Tick);
+        this.actions.GameTick();
     }
 }
 

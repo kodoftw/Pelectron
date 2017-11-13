@@ -23,8 +23,8 @@ export default class Bullet extends Component {
   getBulletStyle(bullet: BulletSpawn) {
     return {
       backgroundColor: bullet.state.color,
-      top: bullet.state.position.y,
-      left: bullet.state.position.x
+      top: bullet.state.position.y + '%',
+      left: bullet.state.position.x + '%'
     }
   }
 }
