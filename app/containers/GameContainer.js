@@ -6,8 +6,7 @@ import GameScreen from '../components/GameScreen';
 import * as GameScreenActions from '../actions/gameScreen';
 
 // Services
-import { InputHandler } from '../services/InputHandler';
-import { GameStateController } from '../services/GameStateController';
+import { InputHandler, GameStateController } from '../services/index';
 
 function mapStateToProps(state) {
   return {
@@ -17,13 +16,13 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   if (InputHandler) {
-    InputHandler.loadActions(dispatch);
+    InputHandler.LoadActions(dispatch);
   } else {
     throw Error('INPUT HANDLER COULD NOT BE LOADED');
   }
 
   if (GameStateController) {
-    GameStateController.startGame(dispatch);
+    GameStateController.StartGame(dispatch);
   } else {
     throw Error('GAME STATE COULD NOT BE INITIALIZED');
   }

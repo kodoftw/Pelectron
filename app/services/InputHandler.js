@@ -6,7 +6,7 @@ class __InputHandler {
     constructor() {
     }
 
-    loadActions(dispatch) {
+    LoadActions(dispatch) {
         const { Left, Right } = this.getActions(dispatch);
 
         // @TODO: unbind all actions

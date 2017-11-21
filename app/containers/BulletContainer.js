@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Bullet from '../components/Bullet';
 
 // Services
-import { InputHandler } from '../services/InputHandler';
+import { InputHandler } from '../services/index';
 
 function mapStateToProps(state) {
   return {
@@ -19,7 +19,7 @@ class BulletContainer extends Component {
     let { state, bullets } = this.props;
     return(
       <div>
-        { bullets.map((bullet) => <Bullet key={bullet.state.id} bullet={bullet} />) }
+        { bullets.map((bullet) => <Bullet key={bullet.State.id} bullet={bullet} />) }
       </div>
     );
   }

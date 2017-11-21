@@ -7,7 +7,7 @@ class __BulletService {
         this.nextColor = 0;
     }
 
-    spawnBullet(SpawnBullet: Function, gameConfiguration: GameConfiguration) {
+    SpawnBullet(SpawnBullet: Function, gameConfiguration: GameConfiguration) {
         let actionParameter = {
             config: {
                 color: this.bulletColors[this.nextColor],

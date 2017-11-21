@@ -3,7 +3,7 @@ import { ActionType, Bullet } from '../models';
 
 import { SPAWN_BULLET, GAME_TICK } from '../actions/gameState';
 
-import { BulletSpawnerFactory } from '../services/BulletSpawnerFactory';
+import { BulletSpawnerFactory, CollisionDetection } from '../services/index';
 
 type BulletsStateType = {
   bullets: BulletSpawn[],
@@ -29,7 +29,10 @@ export default function bullet(state: BulletsStateType = initialState, action: A
             return newState;
 
         case GAME_TICK:
-            newState.bullets.forEach((_) => _.move());
+            newState.bullets
+                .filter((_) => _.Move())
+                .filter((_) => CollisionDetection.Check(_))
+                .forEach((_) => _.OnPadCollision());
             newState.state++;
 
             return newState;

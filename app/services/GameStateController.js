@@ -1,19 +1,30 @@
 import { bindActionCreators } from 'redux';
 import * as GameStateActions from '../actions/gameState';
 
-import { TickService } from './TickService';
-import { GameConfiguration } from '../models/GameConfiguration';
+import { TickService, PadService } from './index';
+import { PadPosition, GameConfiguration } from '../models/index';
 
 class __GameStateController {
     constructor() {
     }
 
-    startGame(dispatch) {
+    StartGame(dispatch) {
         let actions = this.getActions(dispatch);
 
-        TickService.setGameConfiguration(this.gameConfigurationOnStart);
-        TickService.loadActions(actions);
-        TickService.run(dispatch);
+        let gameConfiguration = this.gameConfigurationOnStart;
+
+        this.CreatePad(actions, gameConfiguration);
+        this.StartTickService(dispatch, actions, gameConfiguration)
+    }
+
+    CreatePad(actions, gameConfiguration) {
+        PadService.SpawnPad(actions.SpawnPad, gameConfiguration);
+    }
+
+    StartTickService(dispatch, actions, gameConfiguration) {
+        TickService.SetGameConfiguration(gameConfiguration);
+        TickService.LoadActions(actions);
+        TickService.Run(dispatch);
     }
 
     getActions(dispatch) {
@@ -25,6 +36,7 @@ class __GameStateController {
             BulletDropTime: { value: 3000 },
             BulletSpawnRate: { value: 3000 },
             BulletSize: { value: 1.3 },
+            PadInitialPosition: { value: PadPosition.CENTER },
             PadPadding: { value: 3.5 },
             PadWidth: { value: 31 },
             PadTop: { value: 95 },

@@ -1,10 +1,11 @@
-import { BulletData, GameConfiguration } from "../models/index";
+import { BulletData, BulletPosition, GameConfiguration } from "../models/index";
 
 export class Bullet {
 
     constructor(bulletData: BulletData, gameConfiguration: GameConfiguration) {
         this.bulletData = bulletData;
         this.PadTop = gameConfiguration.PadTop;
+        this.CollisionThreshold = this.PadTop * 0.9;
         this.padHorizontalCenterArray = [
             gameConfiguration.PadPadding + 0.5 * gameConfiguration.PadWidth - 0.5 * gameConfiguration.BulletSize,
             gameConfiguration.PadPadding + 1.5 * gameConfiguration.PadWidth - 0.5 * gameConfiguration.BulletSize,
@@ -15,19 +16,22 @@ export class Bullet {
         this.UpdateBulletHorizontalVelocity();
     }
 
-    move() {
-        const oldPosition = this.bulletData.position.y;
+    // Moves the bullet one frame ahead
+    // @returns: Whether pad collision should be verified
+    Move(): boolean {
+        this.lastPosition = Object.assign({}, this.bulletData.position);
 
         this.bulletData.position.y += this.bulletData.velocity.y + this.yAcc / 2;
         this.bulletData.position.x += this.bulletData.velocity.x;
 
         this.bulletData.velocity.y += this.yAcc;
 
-        // @TODO: Check for collisions
-        if (this.bulletData.position.y >= this.PadTop) {
-            this.bulletData.velocity.y *= -1;
-            this.UpdateBulletHorizontalVelocity();
-        }
+        return this.bulletData.position.y > this.CollisionThreshold;
+    }
+
+    OnPadCollision() {
+        this.bulletData.velocity.y *= -1;
+        this.UpdateBulletHorizontalVelocity();
     }
 
     UpdateBulletHorizontalVelocity() {
@@ -45,7 +49,11 @@ export class Bullet {
         }
     }
 
-    get state(): BulletData {
+    get State(): BulletData {
         return this.bulletData;
+    }
+
+    get LastPosition(): BulletPosition {
+        return this.lastPosition;
     }
 }

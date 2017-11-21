@@ -7,24 +7,24 @@ class __TickService {
         this.nextBulletSpawn = 0;
     }
 
-    setGameConfiguration(config: GameConfiguration) {
+    SetGameConfiguration(config: GameConfiguration) {
         this.gameConfiguration = config;
     }
 
-    loadActions(actions) {
+    LoadActions(actions) {
         this.isRunning = false;
         this.actions = actions;
     }
 
-    pause() {
+    Pause() {
         this.isRunning = false;
     }
 
-    unpause() {
+    Unpause() {
         this.isRunning = true;
     }
 
-    run() {
+    Run() {
         this.tickIntervalId = setInterval(() => this.tick(), this.gameConfiguration.Tick);
         this.isRunning = true;
     }
@@ -32,7 +32,7 @@ class __TickService {
     tick() {
         if (this.isRunning) {
             if (this.nextBulletSpawn <= 0) {
-                BulletService.spawnBullet(this.actions.SpawnBullet, this.gameConfiguration);
+                BulletService.SpawnBullet(this.actions.SpawnBullet, this.gameConfiguration);
                 this.nextBulletSpawn = this.gameConfiguration.BulletSpawnRate;
             } else {
                 this.nextBulletSpawn -= this.gameConfiguration.Tick;

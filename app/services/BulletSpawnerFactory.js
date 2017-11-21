@@ -4,15 +4,17 @@ import { BulletData, GameConfiguration } from '../models/index.js';
 
 export const BulletSpawnerFactory = {
     SpawnBullet(config, gameConfiguration: GameConfiguration): Bullet {
-        let bullet = Object.create(BulletData, this.BulletFactory());
+        let bulletData = Object.create(BulletData, this.BulletDataFactory());
 
-        Object.keys(config).forEach((_) => {
-            bullet[_] = config[_];
-        });
+        if (config != null) {
+            Object.keys(config).forEach((_) => {
+                bulletData[_] = config[_];
+            });
+        }
 
-        return new Bullet(bullet, gameConfiguration);
+        return new Bullet(bulletData, gameConfiguration);
     },
-    BulletFactory: () => {
+    BulletDataFactory: () => {
         return {
             position: {
                 value: {
