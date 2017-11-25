@@ -5,6 +5,8 @@ import styles from './Pad.scss';
 
 import classNames from 'classnames';
 
+import { PadPosition } from '../models/index';
+
 export default class Pad extends Component {
   render() {
     const { position } = this.props;
@@ -18,14 +20,14 @@ export default class Pad extends Component {
 
   getPositionClass(position) {
     switch (position) {
-      case 1:
-        return styles.center;
+      case PadPosition.LEFT:
+        return styles.left;
 
-      case 2:
+      case PadPosition.RIGHT:
         return styles.right;
 
       default:
-        return styles.left;
+        return styles.center;
     }
   }
 }

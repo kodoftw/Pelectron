@@ -33,8 +33,8 @@ class __GameStateController {
 
     get gameConfigurationOnStart() : GameConfiguration {
         return Object.create(GameConfiguration, {
-            BulletDropTime: { value: 3000 },
-            BulletSpawnRate: { value: 3000 },
+            BulletDropTime: { value: 2000 },
+            BulletSpawnRate: { value: 2000 },
             BulletSize: { value: 1.3 },
             PadInitialPosition: { value: PadPosition.CENTER },
             PadPadding: { value: 3.5 },

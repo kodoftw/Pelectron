@@ -11,27 +11,27 @@ export class Pad {
     // @returns: The new PadPosition value
     MoveLeft(): PadPosition {
         const curPosition: PadPosition = this._PadData.position;
-        if (curPosition == null || curPosition === PadPosition.LEFT) {
-            return curPosition;
-        } else if (curPosition == PadPosition.CENTER) {
-            return PadPosition.LEFT;
+        if (curPosition == PadPosition.CENTER) {
+            this._PadData.position = PadPosition.LEFT;
         } else {
-            return PadPosition.CENTER;
+            this._PadData.position = PadPosition.CENTER;
         }
+
+        return this._PadData.position;
     }
 
     // Moves the pad one position to the right.
     // Does not move if already at right.
     // @returns: The new PadPosition value
-    MoveRight() {
+    MoveRight(): PadPosition {
         const curPosition: PadPosition = this._PadData.position;
-        if (curPosition == null || curPosition === PadPosition.RIGHT) {
-            return curPosition;
-        } else if (curPosition === PadPosition.CENTER) {
-            return PadPosition.RIGHT;
+        if (curPosition === PadPosition.CENTER) {
+            this._PadData.position = PadPosition.RIGHT;
         } else {
-            return PadPosition.CENTER;
+            this._PadData.position = PadPosition.CENTER;
         }
+
+        return this._PadData.position;
     }
 
     get Left(): number {

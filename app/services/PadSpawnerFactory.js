@@ -17,7 +17,8 @@ export const PadSpawnerFactory = {
     PadDataFactory: (gameConfiguration: GameConfiguration) => {
         return {
             position: {
-                value: gameConfiguration.PadInitialPosition
+                writable: true,
+                value: gameConfiguration.PadInitialPosition,
             },
             width: {
                 value: gameConfiguration.PadWidth
