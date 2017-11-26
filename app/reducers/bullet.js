@@ -29,10 +29,17 @@ export default function bullet(state: BulletsStateType = initialState, action: A
             return newState;
 
         case GAME_TICK:
-            newState.bullets
-                .filter((_) => _.Move())
-                .filter((_) => CollisionDetection.Check(_))
-                .forEach((_) => _.OnPadCollision());
+            for (let i = 0; i < newState.bullets.length; i++) {
+                const bullet = newState.bullets[i];
+                const nextPosition = bullet.GetNextPosition();
+
+                if (bullet.CanCollide(nextPosition) && CollisionDetection.Check(bullet, nextPosition)) {
+                    const ratio = bullet.OnPadCollision();
+                    bullet.Move(ratio);
+                } else {
+                    bullet.Move();
+                }
+            }
             newState.state++;
 
             return newState;
