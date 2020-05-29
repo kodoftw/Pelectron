@@ -1,6 +1,8 @@
 @import 'app/public/style/colors.scss';
 
 body {
-    margin: 0;
-    background-color: $white;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  background-color: $white;
 }
