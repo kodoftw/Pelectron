@@ -1,6 +1,13 @@
 export interface BulletPosition {
-  X: number;
-  Y: number;
+  Top: number;
+  Left: number;
+}
+
+export interface BulletCompletePosition {
+  Top: number;
+  Right: number;
+  Bottom: number;
+  Left: number;
 }
 
 export interface BulletVelocity {

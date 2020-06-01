@@ -2,8 +2,8 @@ import { GameConfig, PadConfig } from '../models/GameConfig';
 import { PadData } from '../models/Pad';
 import { BulletData } from '../models/Bullet';
 
-import PadEntity from './Pad.entity';
-import BulletEntity from './Bullet.entity';
+import PadEntity from '../entities/Pad.entity';
+import BulletEntity from '../entities/Bullet.entity';
 
 class EntityFactory {
   private bulletCount = 0;
@@ -34,8 +34,8 @@ class EntityFactory {
       Id: this.bulletCount++,
       Color: this.generateBulletColor(this.bulletCount),
       Position: {
-        X: 0,
-        Y: 0,
+        Top: 0,
+        Left: 0,
       },
       Velocity: {
         X: 0,

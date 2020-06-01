@@ -1,8 +1,13 @@
 @import 'app/public/style/colors.scss';
 
 body {
-  height: 100vh;
   width: 100vw;
+  height: 100vh;
   margin: 0;
   background-color: $white;
+
+  & #root {
+    width: 100%;
+    height: 100%;
+  }
 }

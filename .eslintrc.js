@@ -4,6 +4,7 @@ module.exports = {
     // A temporary hack related to IDE not resolving correct package.json
     'import/no-extraneous-dependencies': 'off',
     'class-methods-use-this': 0,
+    'import/prefer-default-export': 0,
     'lines-between-class-members': 0,
     'no-plusplus': 0,
     'no-shadow': 0,

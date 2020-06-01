@@ -1,19 +1,22 @@
 import PadEntity from '../entities/Pad.entity';
-import { BulletPosition } from '../models/Bullet';
+import { BulletCompletePosition } from '../models/Bullet';
 
 class CollisionDetector {
   private pad: PadEntity | undefined;
 
-  public WillCollide(previousPosition: BulletPosition, nextPosition: BulletPosition): boolean {
+  public WillCollide(
+    previousPosition: BulletCompletePosition,
+    nextPosition: BulletCompletePosition
+  ): boolean {
     if (this.pad == null || previousPosition == null || nextPosition == null) {
       return false;
     }
 
     return (
-      previousPosition.Y <= this.pad.Top &&
-      nextPosition.Y >= this.pad.Top &&
-      nextPosition.X >= this.pad.Left &&
-      nextPosition.X <= this.pad.Right
+      previousPosition.Bottom <= this.pad.Top &&
+      nextPosition.Bottom >= this.pad.Top &&
+      nextPosition.Left >= this.pad.Left &&
+      nextPosition.Right <= this.pad.Right
     );
   }
 
