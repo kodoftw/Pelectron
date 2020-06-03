@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { GameConfig } from '../models/GameConfig';
 
 import Bullet from '../components/Bullet/Bullet';
-
 import BulletEntity from '../entities/Bullet.entity';
 import EntityFactory from '../services/EntityFactory';
-
 import CollisionDetector from '../services/CollisionDetector';
 
 type BulletContainerProps = {

@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
-import { GameConfig } from '../models/GameConfig';
-
-import BulletContainer from './BulletContainer';
-import PadContainer from './PadContainer';
-
 import PadEntity from '../entities/Pad.entity';
-
+import { GameConfig } from '../models/GameConfig';
 import CollisionDetector from '../services/CollisionDetector';
 import EntityFactory from '../services/EntityFactory';
 import InputHandler from '../services/InputHandler';
+
+import BulletContainer from './BulletContainer';
+import PadContainer from './PadContainer';
 
 type EntityContainerProps = {
   gameConfig: GameConfig;

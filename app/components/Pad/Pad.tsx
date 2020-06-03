@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 
-import styles from './Pad.scss';
-
 import PadEntity from '../../entities/Pad.entity';
 import { PadPosition } from '../../models/Pad';
+
+import styles from './Pad.scss';
 
 export type PadProps = {
   pad: PadEntity | undefined;

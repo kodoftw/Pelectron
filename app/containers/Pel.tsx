@@ -1,20 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 
+import GameScreen from '../components/GameScreen/GameScreen';
 import ConfigManager from '../services/ConfigManager';
 
-import Score from '../components/Score/Score';
-import GameScreen from '../components/GameScreen/GameScreen';
-
 import EntityContainer from './EntityContainer';
+import ScoreContainer from './ScoreContainer';
 
 const configManager = new ConfigManager();
 
 const Pel: React.FC = () => {
-  const [score] = useState(0);
-
   return (
     <GameScreen>
-      <Score score={score} />
+      <ScoreContainer />
       <EntityContainer gameConfig={configManager.CurrentGameConfig()} />
     </GameScreen>
   );

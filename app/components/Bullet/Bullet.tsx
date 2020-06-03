@@ -1,8 +1,8 @@
 import React from 'react';
 
-import styles from './Bullet.scss';
-
 import BulletEntity from '../../entities/Bullet.entity';
+
+import styles from './Bullet.scss';
 
 export type BulletProps = {
   bullet: BulletEntity | undefined;

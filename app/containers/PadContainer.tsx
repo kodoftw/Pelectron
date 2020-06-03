@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-import PadEntity from '../entities/Pad.entity';
-import InputHandler, { Keybinds } from '../services/InputHandler';
 import Pad from '../components/Pad/Pad';
+import PadEntity from '../entities/Pad.entity';
 import { PadPosition } from '../models/Pad';
+import InputHandler, { Keybinds } from '../services/InputHandler';
 
 type PadContainerProps = {
   pad: PadEntity | undefined;

@@ -1,7 +1,9 @@
 import { BulletData, BulletPosition, BulletCompletePosition } from '../models/Bullet';
 import { GameConfig } from '../models/GameConfig';
+import { MessageType } from '../models/Messages';
 
 import CollisionDetector from '../services/CollisionDetector';
+import Messenger from '../services/Messenger';
 
 class BulletEntity {
   private maxTick: number;
@@ -24,6 +26,7 @@ class BulletEntity {
     const nextTickPosition = this.getNextTickPosition();
 
     if (collisionChecker.WillCollide(this.getCurrentCompletePosition(), nextTickPosition)) {
+      Messenger.Send(MessageType.OnBulletPadCollision);
       this.onPadCollision();
     } else {
       this.bulletData.Position.Top = nextTickPosition.Top;
