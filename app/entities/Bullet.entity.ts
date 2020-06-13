@@ -1,127 +1,63 @@
 import { BulletData, BulletPosition, BulletCompletePosition } from '../models/Bullet';
 import { GameConfig } from '../models/GameConfig';
 import { MessageType } from '../models/Messages';
-
 import CollisionDetector from '../services/CollisionDetector';
 import Messenger from '../services/Messenger';
 
+import BulletKinetics from './BulletKinectics';
+
 class BulletEntity {
-  private maxTick: number;
-  private outOfBoundsTopValue: number;
-  private padCenter: number[] = [];
-  private padHoveringIndex = -1;
-  private yAcc: number;
+  private kinetics: BulletKinetics;
+  private outOfBoundsLeftValue = 100;
+  private outOfBoundsTopValue = 100;
+  private ignoreMovementTicks = 0;
+  private numTicksSkippedAfterCollision = 1;
 
   constructor(private bulletData: BulletData, private gameConfig: GameConfig) {
-    this.maxTick = gameConfig.Bullet.DropTime / gameConfig.Tick;
-    this.outOfBoundsTopValue = 100;
-    // TODO: changing tick to higher values breaks yAcc
-    this.yAcc = (2 * (gameConfig.Pad.Top - gameConfig.Bullet.Size)) / (this.maxTick * this.maxTick);
-
-    this.initializePadCenter();
-    this.updateXVelocityOnCollision();
+    this.kinetics = new BulletKinetics(this.gameConfig);
   }
 
   public AdvanceTick(collisionChecker: CollisionDetector): void {
-    const nextTickPosition = this.getNextTickPosition();
+    if (this.ignoreMovementTicks > 0) {
+      // ignore movement so the bullet seems like it did hit the pad
+      this.ignoreMovementTicks--;
+      return;
+    }
+    const [nextTickVelocity, nextTickPosition] = this.kinetics.getNextTickKinetics();
+    const currentCompletePosition = this.toCompletePosition(this.kinetics.getCurrentPosition());
+    const nextCompletePosition = this.toCompletePosition(nextTickPosition);
 
-    if (collisionChecker.WillCollide(this.getCurrentCompletePosition(), nextTickPosition)) {
+    if (collisionChecker.WillCollide(currentCompletePosition, nextCompletePosition)) {
+      this.ignoreMovementTicks = this.numTicksSkippedAfterCollision;
       Messenger.Send(MessageType.OnBulletPadCollision);
-      this.onPadCollision();
+      this.kinetics.OnPadCollision();
     } else {
-      this.bulletData.Position.Top = nextTickPosition.Top;
-      this.bulletData.Position.Left = nextTickPosition.Left;
-      this.bulletData.Velocity.Y += this.yAcc;
+      this.kinetics.AdvanceTick(nextTickVelocity, nextTickPosition);
     }
   }
 
   public IsOutOfBounds(): boolean {
-    return this.bulletData.Position.Top >= this.outOfBoundsTopValue;
+    return (
+      this.Position.Top >= this.outOfBoundsTopValue ||
+      this.Position.Left >= this.outOfBoundsLeftValue
+    );
   }
 
   public get Data(): BulletData {
     return this.bulletData;
   }
 
-  private getCurrentPosition(): BulletPosition {
-    return this.bulletData.Position;
+  public get Position(): BulletPosition {
+    return this.kinetics.getCurrentPosition();
   }
 
-  private getCurrentCompletePosition(): BulletCompletePosition {
-    const curPosition = this.getCurrentPosition();
-
+  private toCompletePosition(position: BulletPosition): BulletCompletePosition {
     return {
-      Top: curPosition.Top,
-      Right: curPosition.Left + this.size,
-      Bottom: curPosition.Top + this.size,
-      Left: curPosition.Left,
+      Top: position.Top,
+      Right: position.Left + this.size,
+      Bottom: position.Top + this.size,
+      Left: position.Left,
     };
-  }
-
-  private getNextTickPosition(): BulletCompletePosition {
-    const curPosition = this.getCurrentPosition();
-    const nextTop = curPosition.Top + this.tickYMovement();
-    const nextLeft = curPosition.Left + this.tickXMovement();
-
-    return {
-      Top: nextTop,
-      Right: nextLeft + this.size,
-      Bottom: nextTop + this.size,
-      Left: nextLeft,
-    };
-  }
-
-  private onPadCollision(): number {
-    const maxVerticalMovement =
-      this.gameConfig.Pad.Top - (this.bulletData.Position.Top + this.gameConfig.Bullet.Size);
-
-    this.bulletData.Position.Top += maxVerticalMovement;
-
-    const distanceRatio = maxVerticalMovement / this.tickYMovement();
-    this.bulletData.Position.Left += this.tickXMovement() * distanceRatio;
-
-    this.updateVelocityAfterCollision();
-
-    return distanceRatio;
-  }
-
-  private updateVelocityAfterCollision(): void {
-    this.updateXVelocityOnCollision();
-    this.InvertYVelocityOnCollision();
-  }
-
-  private InvertYVelocityOnCollision(): void {
-    this.bulletData.Velocity.Y *= -1;
-  }
-
-  private updateXVelocityOnCollision(): void {
-    this.padHoveringIndex++;
-
-    if (this.padHoveringIndex === 0) {
-      this.bulletData.Velocity.X = this.padCenter[0] / this.maxTick;
-    } else {
-      const distance =
-        this.padCenter[this.padHoveringIndex] - this.padCenter[this.padHoveringIndex - 1];
-      this.bulletData.Velocity.X = (0.5 * distance) / this.maxTick;
-    }
-  }
-
-  private initializePadCenter(): void {
-    const padConfig = this.gameConfig.Pad;
-    const bulletConfig = this.gameConfig.Bullet;
-    this.padCenter = [
-      padConfig.Padding + 0.5 * padConfig.Width - 0.5 * bulletConfig.Size,
-      padConfig.Padding + 1.5 * padConfig.Width - 0.5 * bulletConfig.Size,
-      padConfig.Padding + 2.5 * padConfig.Width - 0.5 * bulletConfig.Size,
-    ];
-  }
-
-  private tickXMovement(): number {
-    return this.bulletData.Velocity.X;
-  }
-
-  private tickYMovement(): number {
-    return this.bulletData.Velocity.Y + this.yAcc / 2;
   }
 
   private get size(): number {

@@ -15,8 +15,8 @@ const Bullet: React.FC<BulletProps> = ({ bullet }) => {
 
   const bulletStyle = {
     backgroundColor: bullet.Data.Color,
-    top: `${bullet.Data.Position.Top}%`,
-    left: `${bullet.Data.Position.Left}%`,
+    top: `${bullet.Position.Top}%`,
+    left: `${bullet.Position.Left}%`,
   };
 
   return <div className={styles.bullet} style={bulletStyle} />;

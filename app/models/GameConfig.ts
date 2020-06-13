@@ -1,13 +1,14 @@
 import { PadPosition } from './Pad';
 
 export interface GameConfig {
-  Tick: number;
   Bullet: BulletConfig;
   Pad: PadConfig;
+  Kinetics: KineticsConfig;
+  Tick: number;
 }
 
 export interface BulletConfig {
-  DropTime: number;
+  Gravity: number;
   SpawnRate: number;
   Size: number;
 }
@@ -17,4 +18,9 @@ export interface PadConfig {
   Width: number;
   Top: number;
   Padding: number;
+}
+
+export interface KineticsConfig {
+  DropTimes: number[];
+  PadCenter: number[];
 }

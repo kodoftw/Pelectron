@@ -12,7 +12,7 @@ const Pel: React.FC = () => {
   return (
     <GameScreen>
       <ScoreContainer />
-      <EntityContainer gameConfig={configManager.CurrentGameConfig()} />
+      <EntityContainer gameConfig={configManager.gameConfig} />
     </GameScreen>
   );
 };
