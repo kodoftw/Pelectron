@@ -6,12 +6,12 @@ import Messenger from '../services/Messenger';
 
 import BulletKinetics from './BulletKinectics';
 
-class BulletEntity {
+export default class BulletEntity {
   private kinetics: BulletKinetics;
   private outOfBoundsLeftValue = 100;
   private outOfBoundsTopValue = 100;
   private ignoreMovementTicks = 0;
-  private numTicksSkippedAfterCollision = 1;
+  private numTicksSkippedAfterCollision = 2;
 
   constructor(private bulletData: BulletData, private gameConfig: GameConfig) {
     this.kinetics = new BulletKinetics(this.gameConfig);
@@ -23,8 +23,8 @@ class BulletEntity {
       this.ignoreMovementTicks--;
       return;
     }
-    const [nextTickVelocity, nextTickPosition] = this.kinetics.getNextTickKinetics();
-    const currentCompletePosition = this.toCompletePosition(this.kinetics.getCurrentPosition());
+    const [nextTickVelocity, nextTickPosition] = this.kinetics.GetNextTickKinetics();
+    const currentCompletePosition = this.toCompletePosition(this.kinetics.GetCurrentPosition());
     const nextCompletePosition = this.toCompletePosition(nextTickPosition);
 
     if (collisionChecker.WillCollide(currentCompletePosition, nextCompletePosition)) {
@@ -48,7 +48,7 @@ class BulletEntity {
   }
 
   public get Position(): BulletPosition {
-    return this.kinetics.getCurrentPosition();
+    return this.kinetics.GetCurrentPosition();
   }
 
   private toCompletePosition(position: BulletPosition): BulletCompletePosition {
@@ -64,5 +64,3 @@ class BulletEntity {
     return this.gameConfig.Bullet.Size;
   }
 }
-
-export default BulletEntity;

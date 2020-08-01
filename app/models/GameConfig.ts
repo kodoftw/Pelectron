@@ -1,4 +1,5 @@
 import { PadPosition } from './Pad';
+import { BulletVelocity } from './Bullet';
 
 export interface GameConfig {
   Bullet: BulletConfig;
@@ -8,7 +9,6 @@ export interface GameConfig {
 }
 
 export interface BulletConfig {
-  Gravity: number;
   SpawnRate: number;
   Size: number;
 }
@@ -21,6 +21,14 @@ export interface PadConfig {
 }
 
 export interface KineticsConfig {
-  DropTimes: number[];
+  FreeFallAcceleration: number;
   PadCenter: number[];
+  FollowUpKinetics: BulletKineticsConfig[];
+  InitialKinetics: BulletKineticsConfig[];
+}
+
+export interface BulletKineticsConfig {
+  DropTime: number;
+  InitialVelocity: BulletVelocity;
+  VerticalAcceleration: number;
 }
