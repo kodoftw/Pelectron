@@ -41,6 +41,10 @@ export default class BulletKinetics {
 
   private drawKineticsConfig(): BulletKineticsConfig {
     const kineticsConfig = this.kineticsConfigurationForPad();
+
+    // Drawing random seeds yields unfair events
+    // It happens too ofter that a drawn seed drop time
+    // conflicts to the drop time of some other bullet.
     const seed = this.drawRandomNumber(0, kineticsConfig.length - 1);
 
     return kineticsConfig[seed];

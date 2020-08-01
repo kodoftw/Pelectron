@@ -7,7 +7,7 @@ import {
 
 export default class KineticsConfigManager {
   private firstDropGravity = 0.0001;
-  private firstDropDeviation = [0.6, 0.8, 0.9, 1, 1.2, 1.3, 1.5, 1.8, 2, 2.2];
+  private firstDropDeviation = [0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.5];
   private followUpDropGravity = 0.00008;
   private followUpDropDeviation = [0.2, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.8, 0.9];
 
