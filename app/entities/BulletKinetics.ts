@@ -1,10 +1,10 @@
-import { BulletVelocity, BulletPosition } from '../models/Bullet';
+import { Position, Velocity } from '../models/Kinetics';
 import { GameConfig, BulletKineticsConfig } from '../models/GameConfig';
 
 export default class BulletKinetics {
   private padIndex = 0;
-  private currentPosition: BulletPosition;
-  private currentVelocity: BulletVelocity;
+  private currentPosition: Position;
+  private currentVelocity: Velocity;
   private kineticsConfig: BulletKineticsConfig;
   private verticalAcceleration: number;
 
@@ -15,12 +15,12 @@ export default class BulletKinetics {
     this.verticalAcceleration = this.kineticsConfig.VerticalAcceleration;
   }
 
-  public AdvanceTick(nextTickVelocity: BulletVelocity, nextTickPosition: BulletPosition): void {
+  public AdvanceTick(nextTickVelocity: Velocity, nextTickPosition: Position): void {
     this.currentVelocity = nextTickVelocity;
     this.currentPosition = nextTickPosition;
   }
 
-  public GetNextTickKinetics(): [BulletVelocity, BulletPosition] {
+  public GetNextTickKinetics(): [Velocity, Position] {
     const nextTickVelocity = this.nextTickVelocity();
 
     return [nextTickVelocity, this.nextTickPosition(nextTickVelocity)];
@@ -35,7 +35,7 @@ export default class BulletKinetics {
     this.verticalAcceleration = this.kineticsConfig.VerticalAcceleration;
   }
 
-  public GetCurrentPosition(): BulletPosition {
+  public GetCurrentPosition(): Position {
     return this.currentPosition;
   }
 
@@ -56,28 +56,28 @@ export default class BulletKinetics {
       : this.gameConfig.Kinetics.FollowUpKinetics;
   }
 
-  private getInitialPosition(): BulletPosition {
+  private getInitialPosition(): Position {
     return {
       Left: 0,
       Top: 0,
     };
   }
 
-  private padCollisionPosition(padIndex: number): BulletPosition {
+  private padCollisionPosition(padIndex: number): Position {
     return {
       Top: this.gameConfig.Pad.Top - this.gameConfig.Bullet.Size,
       Left: this.padCenter(padIndex),
     };
   }
 
-  private nextTickPosition(velocity: BulletVelocity): BulletPosition {
+  private nextTickPosition(velocity: Velocity): Position {
     return {
       Top: this.currentPosition.Top + velocity.Y * this.gameConfig.Tick,
       Left: this.currentPosition.Left + this.currentVelocity.X,
     };
   }
 
-  private nextTickVelocity(): BulletVelocity {
+  private nextTickVelocity(): Velocity {
     return {
       X: this.currentVelocity.X,
       Y: this.currentVelocity.Y + this.verticalAcceleration * this.gameConfig.Tick,

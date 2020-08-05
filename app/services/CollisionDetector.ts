@@ -1,13 +1,10 @@
 import PadEntity from '../entities/Pad.entity';
-import { BulletCompletePosition } from '../models/Bullet';
+import { CompletePosition } from '../models/Kinetics';
 
 class CollisionDetector {
   private pad: PadEntity | undefined;
 
-  public WillCollide(
-    previousPosition: BulletCompletePosition,
-    nextPosition: BulletCompletePosition
-  ): boolean {
+  public WillCollide(previousPosition: CompletePosition, nextPosition: CompletePosition): boolean {
     if (this.pad == null || previousPosition == null || nextPosition == null) {
       return false;
     }

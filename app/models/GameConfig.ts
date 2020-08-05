@@ -1,5 +1,5 @@
 import { PadPosition } from './Pad';
-import { BulletVelocity } from './Bullet';
+import { Velocity } from './Kinetics';
 
 export interface GameConfig {
   Bullet: BulletConfig;
@@ -29,6 +29,6 @@ export interface KineticsConfig {
 
 export interface BulletKineticsConfig {
   DropTime: number;
-  InitialVelocity: BulletVelocity;
+  InitialVelocity: Velocity;
   VerticalAcceleration: number;
 }

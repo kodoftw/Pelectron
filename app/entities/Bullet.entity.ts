@@ -1,10 +1,11 @@
-import { BulletData, BulletPosition, BulletCompletePosition } from '../models/Bullet';
+import { BulletData } from '../models/Bullet';
+import { CompletePosition, Position } from '../models/Kinetics';
 import { GameConfig } from '../models/GameConfig';
 import { MessageType } from '../models/Messages';
 import CollisionDetector from '../services/CollisionDetector';
 import Messenger from '../services/Messenger';
 
-import BulletKinetics from './BulletKinectics';
+import BulletKinetics from './BulletKinetics';
 
 export default class BulletEntity {
   private kinetics: BulletKinetics;
@@ -47,11 +48,11 @@ export default class BulletEntity {
     return this.bulletData;
   }
 
-  public get Position(): BulletPosition {
+  public get Position(): Position {
     return this.kinetics.GetCurrentPosition();
   }
 
-  private toCompletePosition(position: BulletPosition): BulletCompletePosition {
+  private toCompletePosition(position: Position): CompletePosition {
     return {
       Top: position.Top,
       Right: position.Left + this.size,

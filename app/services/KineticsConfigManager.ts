@@ -22,7 +22,7 @@ export default class KineticsConfigManager {
       PadCenter: this.padCenters(),
       FreeFallAcceleration: this.firstDropGravity,
       InitialKinetics: this.initialKinetics(),
-      FollowUpKinetics: this.followUpKinectics(),
+      FollowUpKinetics: this.followUpKinetics(),
     };
   }
 
@@ -46,7 +46,7 @@ export default class KineticsConfigManager {
     });
   }
 
-  private followUpKinectics(): BulletKineticsConfig[] {
+  private followUpKinetics(): BulletKineticsConfig[] {
     const gravity = this.followUpDropGravity;
     const verticalTravelDistance = this.padConfig.Top - this.bulletConfig.Size;
     // Assuming distance between pads are equal
