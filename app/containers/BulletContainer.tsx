@@ -34,7 +34,7 @@ const BulletContainer: React.FC<BulletContainerProps> = ({
           nextBulletSpawn -= gameConfig.Tick;
         }
 
-        return [...bullets.filter(b => !b.IsOutOfBounds())];
+        return [...bullets.filter(b => b.IsAlive())];
       });
     }, gameConfig.Tick);
   }, []);

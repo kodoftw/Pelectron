@@ -5,4 +5,5 @@ export interface BulletData {
   Color: string;
   Position: Position;
   Velocity: Velocity;
+  Size: number;
 }

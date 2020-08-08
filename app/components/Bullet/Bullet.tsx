@@ -17,6 +17,8 @@ const Bullet: React.FC<BulletProps> = ({ bullet }) => {
     backgroundColor: bullet.Data.Color,
     top: `${bullet.Position.Top}%`,
     left: `${bullet.Position.Left}%`,
+    width: `${bullet.Data.Size}vh`,
+    height: `${bullet.Data.Size}vh`,
   };
 
   return <div className={styles.bullet} style={bulletStyle} />;

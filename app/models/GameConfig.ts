@@ -3,9 +3,10 @@ import { Velocity } from './Kinetics';
 
 export interface GameConfig {
   Bullet: BulletConfig;
-  Pad: PadConfig;
   Kinetics: KineticsConfig;
+  Pad: PadConfig;
   Tick: number;
+  Trail: TrailConfig;
 }
 
 export interface BulletConfig {
@@ -13,11 +14,10 @@ export interface BulletConfig {
   Size: number;
 }
 
-export interface PadConfig {
-  Position: PadPosition;
-  Width: number;
-  Top: number;
-  Padding: number;
+export interface BulletKineticsConfig {
+  DropTime: number;
+  InitialVelocity: Velocity;
+  VerticalAcceleration: number;
 }
 
 export interface KineticsConfig {
@@ -27,8 +27,13 @@ export interface KineticsConfig {
   InitialKinetics: BulletKineticsConfig[];
 }
 
-export interface BulletKineticsConfig {
-  DropTime: number;
-  InitialVelocity: Velocity;
-  VerticalAcceleration: number;
+export interface PadConfig {
+  Position: PadPosition;
+  Width: number;
+  Top: number;
+  Padding: number;
+}
+
+export interface TrailConfig {
+  TicksToLive: number;
 }

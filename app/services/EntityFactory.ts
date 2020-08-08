@@ -1,9 +1,12 @@
+import { BulletData } from '../models/Bullet';
 import { GameConfig, PadConfig } from '../models/GameConfig';
 import { PadData } from '../models/Pad';
-import { BulletData } from '../models/Bullet';
 
-import PadEntity from '../entities/Pad.entity';
 import BulletEntity from '../entities/Bullet.entity';
+import PadEntity from '../entities/Pad.entity';
+
+import Messenger from './Messenger';
+import { OnBulletCreationMessage } from '../messages/OnBulletCreationMessage';
 
 class EntityFactory {
   private bulletCount = 0;
@@ -15,7 +18,9 @@ class EntityFactory {
   }
 
   public CreateBullet(gameConfig: GameConfig): BulletEntity {
-    const bulletData = this.generateBulletData();
+    const bulletData = this.generateBulletData(gameConfig);
+
+    Messenger.SendMessage(new OnBulletCreationMessage(bulletData));
 
     return new BulletEntity(bulletData, gameConfig);
   }
@@ -29,7 +34,7 @@ class EntityFactory {
     };
   }
 
-  private generateBulletData(): BulletData {
+  private generateBulletData(gameConfig: GameConfig): BulletData {
     return {
       Id: this.bulletCount++,
       Color: this.generateBulletColor(this.bulletCount),
@@ -41,6 +46,7 @@ class EntityFactory {
         X: 0,
         Y: 0,
       },
+      Size: gameConfig.Bullet.Size,
     };
   }
 

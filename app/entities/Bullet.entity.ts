@@ -1,7 +1,9 @@
 import { BulletData } from '../models/Bullet';
-import { CompletePosition, Position } from '../models/Kinetics';
 import { GameConfig } from '../models/GameConfig';
-import { MessageType } from '../models/Messages';
+import { CompletePosition, Position } from '../models/Kinetics';
+
+import { OnBulletPadCollisionMessage } from '../messages/OnBulletPadCollisionMessage';
+
 import CollisionDetector from '../services/CollisionDetector';
 import Messenger from '../services/Messenger';
 
@@ -14,8 +16,8 @@ export default class BulletEntity {
   private ignoreMovementTicks = 0;
   private numTicksSkippedAfterCollision = 2;
 
-  constructor(private bulletData: BulletData, private gameConfig: GameConfig) {
-    this.kinetics = new BulletKinetics(this.gameConfig);
+  constructor(private bulletData: BulletData, gameConfig: GameConfig) {
+    this.kinetics = new BulletKinetics(gameConfig);
   }
 
   public AdvanceTick(collisionChecker: CollisionDetector): void {
@@ -30,18 +32,15 @@ export default class BulletEntity {
 
     if (collisionChecker.WillCollide(currentCompletePosition, nextCompletePosition)) {
       this.ignoreMovementTicks = this.numTicksSkippedAfterCollision;
-      Messenger.Send(MessageType.OnBulletPadCollision);
+      this.sendOnCollisionMessage();
       this.kinetics.OnPadCollision();
     } else {
       this.kinetics.AdvanceTick(nextTickVelocity, nextTickPosition);
     }
   }
 
-  public IsOutOfBounds(): boolean {
-    return (
-      this.Position.Top >= this.outOfBoundsTopValue ||
-      this.Position.Left >= this.outOfBoundsLeftValue
-    );
+  public IsAlive(): boolean {
+    return !this.isOutOfBounds();
   }
 
   public get Data(): BulletData {
@@ -52,16 +51,27 @@ export default class BulletEntity {
     return this.kinetics.GetCurrentPosition();
   }
 
+  public get Size(): number {
+    return this.bulletData.Size;
+  }
+
   private toCompletePosition(position: Position): CompletePosition {
     return {
       Top: position.Top,
-      Right: position.Left + this.size,
-      Bottom: position.Top + this.size,
+      Right: position.Left + this.Size,
+      Bottom: position.Top + this.Size,
       Left: position.Left,
     };
   }
 
-  private get size(): number {
-    return this.gameConfig.Bullet.Size;
+  private isOutOfBounds(): boolean {
+    return (
+      this.Position.Top >= this.outOfBoundsTopValue ||
+      this.Position.Left >= this.outOfBoundsLeftValue
+    );
+  }
+
+  private sendOnCollisionMessage(): void {
+    Messenger.SendMessage(new OnBulletPadCollisionMessage());
   }
 }
