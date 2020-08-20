@@ -1,14 +1,14 @@
 import { Message, MessageType } from '../models/Messages';
 import BulletEntity from '../entities/Bullet.entity';
 
-export class OnBulletCreationMessage implements Message {
+export class OnBulletRemovalMessage implements Message {
   constructor(private bullet: BulletEntity) {}
 
   public GetMessageType(): MessageType {
-    return MessageType.OnBulletCreation;
+    return MessageType.OnBulletRemoval;
   }
 
-  public get BulletCreated(): BulletEntity {
+  public get BulletRemoved(): BulletEntity {
     return this.bullet;
   }
 }

@@ -1,6 +1,6 @@
 import KineticsConfigManager from './KineticsConfigManager';
 
-import { GameConfig, BulletConfig, PadConfig } from '../models/GameConfig';
+import { GameConfig, BulletConfig, PadConfig, TrailConfig } from '../models/GameConfig';
 import { PadPosition } from '../models/Pad';
 
 export default class ConfigManager {
@@ -22,6 +22,7 @@ export default class ConfigManager {
       Pad: padConfig,
       Kinetics: kineticsConfig.KineticsConfig(),
       Tick: gameTick,
+      Trail: this.trailConfig(),
     };
   }
 
@@ -38,6 +39,13 @@ export default class ConfigManager {
       Width: 31,
       Top: 95,
       Padding: 3.5,
+    };
+  }
+
+  private trailConfig(): TrailConfig {
+    return {
+      CreationTickInterval: 60,
+      TicksToLive: 60,
     };
   }
 }

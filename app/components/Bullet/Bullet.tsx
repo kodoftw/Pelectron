@@ -13,7 +13,7 @@ const Bullet: React.FC<BulletProps> = ({ bullet }) => {
     return <div />;
   }
 
-  const bulletStyle = {
+  const style = {
     backgroundColor: bullet.Data.Color,
     top: `${bullet.Position.Top}%`,
     left: `${bullet.Position.Left}%`,
@@ -21,7 +21,7 @@ const Bullet: React.FC<BulletProps> = ({ bullet }) => {
     height: `${bullet.Data.Size}vh`,
   };
 
-  return <div className={styles.bullet} style={bulletStyle} />;
+  return <div className={styles.bullet} style={style} />;
 };
 
 export default Bullet;

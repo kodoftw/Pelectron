@@ -1,15 +1,15 @@
 import { BulletData } from '../models/Bullet';
 import { GameConfig, PadConfig } from '../models/GameConfig';
 import { PadData } from '../models/Pad';
+import { TrailData } from '../models/Trail';
 
 import BulletEntity from '../entities/Bullet.entity';
 import PadEntity from '../entities/Pad.entity';
-
-import Messenger from './Messenger';
-import { OnBulletCreationMessage } from '../messages/OnBulletCreationMessage';
+import TrailEntity from '../entities/Trail.entity';
 
 class EntityFactory {
   private bulletCount = 0;
+  private trailCount = 0;
 
   public CreatePad(gameConfig: GameConfig): PadEntity {
     const padData = this.mapToPadData(gameConfig.Pad);
@@ -20,9 +20,13 @@ class EntityFactory {
   public CreateBullet(gameConfig: GameConfig): BulletEntity {
     const bulletData = this.generateBulletData(gameConfig);
 
-    Messenger.SendMessage(new OnBulletCreationMessage(bulletData));
-
     return new BulletEntity(bulletData, gameConfig);
+  }
+
+  public CreateTrail(sourceEntity: BulletEntity, gameConfig: GameConfig): TrailEntity {
+    const trailData = this.generateTrailData(sourceEntity);
+
+    return new TrailEntity(trailData, gameConfig);
   }
 
   private mapToPadData(config: PadConfig): PadData {
@@ -68,6 +72,15 @@ class EntityFactory {
       '#880E4F', // deeppink
       '#039BE5', // lightblue
     ];
+  }
+
+  private generateTrailData(sourceEntity: BulletEntity): TrailData {
+    return {
+      Id: this.trailCount++,
+      Color: sourceEntity.Data.Color,
+      Position: sourceEntity.Position,
+      Size: sourceEntity.Size,
+    };
   }
 }
 

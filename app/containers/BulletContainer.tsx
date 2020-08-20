@@ -5,6 +5,10 @@ import Bullet from '../components/Bullet/Bullet';
 import BulletEntity from '../entities/Bullet.entity';
 import EntityFactory from '../services/EntityFactory';
 import CollisionDetector from '../services/CollisionDetector';
+import TrailContainer from './TrailContainer';
+import Messenger from '../services/Messenger';
+import { OnBulletCreationMessage } from '../messages/OnBulletCreationMessage';
+import { OnBulletRemovalMessage } from '../messages/OnBulletRemovalMessage';
 
 type BulletContainerProps = {
   gameConfig: GameConfig;
@@ -28,13 +32,24 @@ const BulletContainer: React.FC<BulletContainerProps> = ({
 
         // TODO: move this out to a setTimeout
         if (nextBulletSpawn <= 0) {
+          const newBullet = entityFactory.CreateBullet(gameConfig);
+          bullets.push(newBullet);
+          Messenger.SendMessage(new OnBulletCreationMessage(newBullet));
+
           nextBulletSpawn = gameConfig.Bullet.SpawnRate;
-          bullets.push(entityFactory.CreateBullet(gameConfig));
         } else {
           nextBulletSpawn -= gameConfig.Tick;
         }
 
-        return [...bullets.filter(b => b.IsAlive())];
+        const aliveBullets = bullets.filter(b => {
+          const isAlive = b.IsAlive();
+          if (!isAlive) {
+            Messenger.SendMessage(new OnBulletRemovalMessage(b));
+          }
+          return isAlive;
+        });
+
+        return [...aliveBullets];
       });
     }, gameConfig.Tick);
   }, []);
@@ -44,6 +59,7 @@ const BulletContainer: React.FC<BulletContainerProps> = ({
       {bullets.map(b => (
         <Bullet key={b.Data.Id} bullet={b} />
       ))}
+      <TrailContainer gameConfig={gameConfig} entityFactory={entityFactory} />
     </div>
   );
 };

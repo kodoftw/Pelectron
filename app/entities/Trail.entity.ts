@@ -1,13 +1,13 @@
-import { BulletData } from '../models/Bullet';
 import { GameConfig } from '../models/GameConfig';
+import { TrailData } from '../models/Trail';
 
 export default class TrailEntity {
   private readonly sizeReductionPerTick: number;
-  private trailData: BulletData;
+  private trailData: TrailData;
   private ticksToLive: number;
 
-  constructor(bulletSource: BulletData, gameConfig: GameConfig) {
-    this.trailData = bulletSource;
+  constructor(trailData: TrailData, gameConfig: GameConfig) {
+    this.trailData = trailData;
     this.ticksToLive = gameConfig.Trail.TicksToLive;
 
     this.sizeReductionPerTick = this.trailData.Size / this.ticksToLive;
@@ -22,7 +22,7 @@ export default class TrailEntity {
     return this.ticksToLive >= 0;
   }
 
-  public get Data(): BulletData {
+  public get Data(): TrailData {
     return this.trailData;
   }
 

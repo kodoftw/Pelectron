@@ -35,5 +35,6 @@ export interface PadConfig {
 }
 
 export interface TrailConfig {
+  CreationTickInterval: number;
   TicksToLive: number;
 }
